@@ -1,4 +1,4 @@
-#Below is our python script. 
+# Below is our python script. 
 # It's a slightly modified version of this code found at: https://blog.thesen.eu/aktuellen-dash-button-oder-ariel-etc-von-amazon-jk29lp-mit-dem-raspberry-pi-nutzen-hacken/
 # Many thanks to Stefan from the "Bastel & Reparatur Blog" for sharing his script!
 
@@ -17,7 +17,7 @@ lastpress = datetime.datetime(1970,1,1)
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import *
  
- 
+# Our Dash-Button "Gillette" will trigger IFTTT to write a line in a Google spreadsheet document.
 def button_pressed_dash1():
   global lastpress
   thistime = datetime.datetime.now()
@@ -30,6 +30,7 @@ def button_pressed_dash1():
   lastpress = thistime
 
 
+# Our Dash-Button "Brabantia" will trigger IFTTT to write a line in a Google spreadsheet document.
 def button_pressed_dash2():
   global lastpress
   thistime = datetime.datetime.now()
@@ -42,6 +43,7 @@ def button_pressed_dash2():
   lastpress = thistime
 
 
+# Our Dash-Button "Nerf" will trigger IFTTT to send an SMS (to alarm the facility management of a dirty toilet).
 def button_pressed_dash3():
   global lastpress
   thistime = datetime.datetime.now()
@@ -54,6 +56,8 @@ def button_pressed_dash3():
   lastpress = thistime
 
 
+# Our Dash-Button "Powerpoint" will start a shell script which in turn triggers a mouseclick ... 
+# ... which will lead to a changed image on the screen (if the image viewer was started correctly ~_~ ).
 def button_pressed_dash4():
   global lastpress
   thistime = datetime.datetime.now()
@@ -65,6 +69,9 @@ def button_pressed_dash4():
     os.system('sudo sh ./mouseclick.sh')
  
   lastpress = thistime
+# The mouseclick.sh script which is called by the button_pressed_dash4-method contains of only one line of code:
+# "xdotool click 1"
+# This is used to control an image viewer (we ran feh preview in fullscreen) and loops through images stored in a folder
 
 
 def udp_filter(pkt):
@@ -90,8 +97,3 @@ sniff(prn=udp_filter, store=0, filter="udp", lfilter=lambda d: d.src in mac_id_l
  
 if __name__ == "__main__":
   main()
-
-# The mouseclick.sh script which is called by the button_pressed_dash4-method contains of only one line of code:
-# "xdotool click 1"
-# This is used to control an image viewer (we ran feh preview in fullscreen) and loops through images stored in a folder
-
